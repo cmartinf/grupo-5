@@ -1,6 +1,6 @@
 <template>
     <div class="container my-5">
-      <h2 class="text-center mb-4">Browse News by Tag: "{{ tag }}"</h2>
+      <h2 class="text-center mb-4">Explorar noticias por etiqueta: "{{ tag }}"</h2>
   
       <!-- News List -->
       <div v-if="newsList.length" class="row g-4">
@@ -26,7 +26,7 @@
   
       <!-- No News Fallback -->
       <div v-else class="text-center">
-        <h5 class="text-muted">No news available for this tag.</h5>
+        <h5 class="text-muted">No hay noticias disponibles para esta etiqueta.</h5>
       </div>
     </div>
   </template>
@@ -38,16 +38,16 @@
     name: "BrowseByTag",
     data() {
       return {
-        tag: "", // The tag being searched
-        newsList: [], // List of news articles for the tag
+        tag: "",
+        newsList: [], 
       };
     },
     async created() {
-      this.tag = this.$route.query.tag; // Get the tag from query parameter
+      this.tag = this.$route.query.tag;
       await this.fetchNewsByTag();
     },
     watch: {
-      // React to route changes to fetch new data
+     
       "$route.query.tag": "fetchNewsByTag",
     },
     methods: {
@@ -71,7 +71,7 @@
           }));
         } catch (error) {
           console.error("Error fetching news by tag:", error);
-          this.newsList = []; // Fallback to empty list
+          this.newsList = []; 
         }
       },
       goToNews(newsId) {

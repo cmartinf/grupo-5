@@ -68,7 +68,23 @@
       async fetchTags() {
         try {
           const { data } = await axios.get(`${this.baseUrl}/api/tags`);
-          this.tags = data.map((tag) => tag.name);
+          // Ensure tags is always an array of strings
+          let tagsArray = [];
+          if (Array.isArray(data)) {
+            if (typeof data[0] === "string") {
+              tagsArray = data;
+            } else if (data[0] && typeof data[0].name === "string") {
+              tagsArray = data.map((tag) => tag.name);
+            }
+          } else if (data && Array.isArray(data.tags)) {
+            if (typeof data.tags[0] === "string") {
+              tagsArray = data.tags;
+            } else if (data.tags[0] && typeof data.tags[0].name === "string") {
+              tagsArray = data.tags.map((tag) => tag.name);
+            }
+          }
+          // Filter out any falsy or empty values
+          this.tags = tagsArray.filter(tag => !!tag && tag.trim() !== "");
         } catch (error) {
           console.error("Error fetching tags:", error);
           this.tags = [];

@@ -26,13 +26,13 @@
             <span class="author-name">{{ article.author?.name }}</span>
           </div>
           <div class="share-buttons">
-            <button class="share-button facebook" @click="shareToFacebook">
+            <button class="share-button facebook" @click="CompartinosenFacebook">
               <i class="bi bi-facebook"></i>
             </button>
-            <button class="share-button twitter" @click="shareToTwitter">
+            <button class="share-button twitter" @click="sCompartinosenTwitter">
               <i class="bi bi-twitter"></i>
             </button>
-            <button class="share-button copy-link" @click="copyLink">
+            <button class="share-button copy-link" @click="CopiarLink">
               <i class="bi bi-clipboard"></i>
             </button>
           </div>
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    <div v-else class="loading">Loading...</div>
+    <div v-else class="loading">Cargando...</div>
   </template>
   <script>
 import axios from "axios";
@@ -71,7 +71,7 @@ export default {
         const response = await axios.get(`${this.baseUrl}/api/news/${articleId}`); // Fetch from the backend
         this.article = response.data;
       } catch (error) {
-        console.error("Error fetching the article:", error);
+        console.error("Error al obtener el artículo:", error);
       }
     },
     async addHeart() {
@@ -82,7 +82,7 @@ export default {
           heart_counts: this.article.heart_counts,
         });
       } catch (error) {
-        console.error("Error updating heart count:", error);
+        console.error("Error al actualizar el conteo de corazones:", error);
       }
     },
     formatDate(date) {
@@ -108,7 +108,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchArticle(); // Fetch article when the component is mounted
+    this.fetchArticle(); 
   },
 };
 </script>
