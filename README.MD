@@ -125,7 +125,7 @@ Desarrollar una plataforma que permita:
 | Frontend   | Vue.js 3, Bootstrap 5, Axios   |
 | Testing    | PHPUnit, Jest (opcional)        |
 | CI/CD      | GitHub Actions                 |
-| Despliegue | en dasarrollo |
+| Despliegue | en desarrollo |
 
 ---
 
@@ -134,7 +134,7 @@ Desarrollar una plataforma que permita:
 ### Clonar el repositorio
 ```bash
 git clone https://github.com/cmartinf/grupo-5
-cd Managar_News
+cd Manager_News
 ```
 
 ### Backend (Laravel) Setup
