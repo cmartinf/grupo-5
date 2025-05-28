@@ -14,7 +14,8 @@
             <span class="badge bg-warning text-dark mb-2">{{ news.category }}</span>
             <h5 class="card-title text-truncate text-black">{{ news.title }}</h5>
             <p class="text-muted small">{{ news.date }}</p>
-            <p class="card-text small text-truncate">{{ news.summary }}</p>
+           <p class="card-text small text-truncate" v-html="news.summary"></p>
+
             <div class="d-flex justify-content-between align-items-center">
               <div class="d-flex align-items-center">
                 <img

@@ -86,8 +86,12 @@
                 >
                   <i :class="news.is_published == '1' ? 'bi bi-x-circle bg-red' : 'bi bi-check-circle'"></i>
                 </button>
-                <button class="btn btn-modern btn-sm" @click="previewNews(news)">
+                <button class="btn btn-modern btn-sm me-2" @click="previewNews(news)">
                   <i class="bi bi-eye"></i> Vista Previa
+                </button>
+                <!-- Botón Eliminar Noticia -->
+                <button class="btn btn-danger btn-sm" @click="confirmDeleteNews(news)">
+                  <i class="bi bi-trash"></i>
                 </button>
               </td>
             </tr>
@@ -207,6 +211,9 @@
                 <button type="submit" class="btn btn-modern" :disabled="loading">
                   <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
                   Agregar Noticia
+                </button>
+                <button type="button" class="btn btn-secondary ms-2" @click="addNewsModal.hide()">
+                  Volver
                 </button>
               </form>
             </div>
@@ -341,6 +348,9 @@
                 <button type="submit" class="btn btn-modern" :disabled="loading">
                   <span v-if="loading" class="spinner-border spinner-border-sm me-2"></span>
                   Guardar Cambios
+                </button>
+                <button type="button" class="btn btn-secondary ms-2" @click="editNewsModal.hide()">
+                  Volver
                 </button>
               </form>
             </div>
@@ -583,6 +593,38 @@ export default {
       });
     },
 
+    confirmDeleteNews(news) {
+      if (confirm(`¿Estás seguro de que deseas eliminar la noticia "${news.title}"?`)) {
+        this.deleteNews(news.id);
+      }
+    },
+
+    async deleteNews(id) {
+      this.loading = true;
+      try {
+        const response = await axios.delete(`/api/news/${id}`);
+        // Consider deletion successful if status is 200 or 204, or if response.data.success is true
+        if (
+          response.status === 200 ||
+          response.status === 204 ||
+          (response.data && (response.data.success === true || response.data.success === undefined))
+        ) {
+          this.toast.success("¡Noticia eliminada correctamente!");
+          await this.fetchNews();
+        } else {
+          throw new Error(response.data?.message || "Error en la respuesta del servidor");
+        }
+      } catch (error) {
+        let errorMsg = "Error al eliminar la noticia.";
+        if (error.response && error.response.data?.message) {
+          errorMsg = error.response.data.message;
+        }
+        this.toast.error(errorMsg);
+      } finally {
+        this.loading = false;
+      }
+    },
+
     applyFilters() {
       const query = this.searchQuery.toLowerCase();
       this.filteredNews = this.newsList
@@ -663,24 +705,25 @@ export default {
       }
 
       this.loading = true;
-      
+
       const formData = new FormData();
       formData.append('name', this.editingAuthor.name);
-       formData.append('_method', 'PUT');
-      
+      formData.append('_method', 'PUT');
+
       if (this.editingAuthor.picture) {
         formData.append('profile_picture', this.editingAuthor.picture);
       }
 
       try {
-        const response = await axios.put(`/api/authors/${this.editingAuthor.id}`, formData, {
+        // Usar POST con _method=PUT para compatibilidad con Laravel
+        const response = await axios.post(`/api/authors/${this.editingAuthor.id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'Accept': 'application/json'
           }
         });
 
-        if (response.data.success) {
+        if (response.data.success || response.status === 200) {
           this.toast.success('Autor actualizado correctamente');
           await this.fetchAuthors();
           this.editAuthorModal.hide();
@@ -691,7 +734,7 @@ export default {
       } catch (error) {
         console.error('Error updating author:', error);
         let errorMsg = 'Error al actualizar el autor';
-        
+
         if (error.response) {
           if (error.response.status === 404) {
             errorMsg = 'Autor no encontrado (ID inválido)';
@@ -699,7 +742,7 @@ export default {
             errorMsg = error.response.data.message;
           }
         }
-        
+
         this.toast.error(errorMsg);
       } finally {
         this.loading = false;
@@ -838,38 +881,38 @@ export default {
       }
     },
 
-    openEditModal(news) {
-      this.currentNews = { ...news };
-      this.currentNews.image = null;
-      this.$nextTick(() => {
-        if (!this.quillEdit) {
-          const container = this.$refs.editQuillEditor;
-          if (container) {
-            this.quillEdit = new Quill(container, {
-              theme: "snow",
-              modules: {
-                toolbar: [
-                  [{ header: "1" }, { header: "2" }, { font: [] }],
-                  [{ list: "ordered" }, { list: "bullet" }],
-                  ["bold", "italic", "underline", "strike"],
-                  [{ align: [] }],
-                  ["link", "image"],
-                ],
-              },
-            });
-            this.quillEdit.on("text-change", () => {
-              this.currentNews.content = this.quillEdit.root.innerHTML;
-            });
-          }
-        }
-        if (this.quillEdit) {
-          this.quillEdit.root.innerHTML = this.currentNews.content || "";
-        }
-        this.editNewsModal.show();
-      });
-    },
+openEditModal(news) {
+  this.currentNews = { ...news };
+  this.currentNews.image = null;
+  this.$nextTick(() => {
+    if (!this.quillEdit) {
+      const container = this.$refs.editQuillEditor;
+      if (container) {
+        this.quillEdit = new Quill(container, {
+          theme: "snow",
+          modules: {
+            toolbar: [
+              [{ header: "1" }, { header: "2" }, { font: [] }],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["bold", "italic", "underline", "strike"],
+              [{ align: [] }],
+              ["link", "image"],
+            ],
+          },
+        });
+        this.quillEdit.on("text-change", () => {
+          this.currentNews.content = this.quillEdit.root.innerHTML;
+        });
+      }
+    }
+    if (this.quillEdit) {
+      this.quillEdit.root.innerHTML = this.currentNews.content || "";
+    }
+    this.editNewsModal.show();
+  });
+},
 
-    async updateNews() {
+async updateNews() {
   this.loading = true;
   const formData = new FormData();
   formData.append("title", this.currentNews.title);
@@ -877,20 +920,21 @@ export default {
   formData.append("authorId", this.currentNews.authorId);
   formData.append("category", this.currentNews.category || "");
   formData.append("tags", JSON.stringify(this.currentNews.tags));
-  formData.append("_method", "PUT"); // Asegurarse de incluir esto
+  formData.append("_method", "PUT"); // Laravel backend espera esto para simular PUT
 
   if (this.currentNews.image) {
     formData.append("image", this.currentNews.image);
   }
 
   try {
+    // Usar POST con _method=PUT para compatibilidad con Laravel
     const response = await axios.post(`/api/news/${this.currentNews.id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     });
 
-    if (response.data.success) {
+    if (response.data.success || response.status === 200) {
       this.toast.success("¡Noticia actualizada correctamente!");
       await this.fetchNews();
       this.editNewsModal.hide();
@@ -916,11 +960,22 @@ export default {
     this.loading = false;
   }
 },
-
+// Botón para volver de editar a agregar autor
+goToAddAuthorFromEdit() {
+  this.editAuthorModal.hide();
+  this.$nextTick(() => {
+  this.addAuthorModal.show();
+  });
+},
     async togglePublish(news) {
       const updatedStatus = !news.is_published;
       try {
-        await axios.put(`/api/news/${news.id}/publish`, { is_published: updatedStatus });
+        const formData = new FormData();
+        formData.append('is_published', updatedStatus ? 1 : 0);
+        formData.append('_method', 'PUT');
+        await axios.post(`/api/news/${news.id}/publish`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
         await this.fetchNews();
         this.toast.success(updatedStatus ? "¡Noticia publicada!" : "Noticia despublicada");
       } catch (error) {

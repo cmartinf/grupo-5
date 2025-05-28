@@ -19,7 +19,7 @@ Route::prefix('news')->group(function () {
     Route::get('/all', [NewsController::class, 'all']);
     Route::get('/{id}', [NewsController::class, 'show'])->where('id', '[0-9]+');
     Route::post('/', [NewsController::class, 'store'])->middleware('auth:sanctum');
-    Route::post('/{id}', [NewsController::class, 'update'])->middleware('auth:sanctum')->where('id', '[0-9]+');
+    Route::put('/{id}', [NewsController::class, 'update'])->middleware('auth:sanctum')->where('id', '[0-9]+');
     Route::delete('/{id}', [NewsController::class, 'destroy'])->middleware('auth:sanctum')->where('id', '[0-9]+');
     Route::post('/{id}/heart', [NewsController::class, 'addHeart']);
     Route::put('/{id}/publish', [NewsController::class, 'publish'])->middleware('auth:sanctum')->where('id', '[0-9]+');
@@ -42,7 +42,7 @@ Route::get('/tags', [TagController::class, 'index']);
 Route::prefix('authors')->group(function () {
     Route::get('/', [AuthorController::class, 'index']);
     Route::post('/', [AuthorController::class, 'store'])->middleware('auth:sanctum');
-    Route::post('/{author}', [AuthorController::class, 'update'])->middleware('auth:sanctum'); // Cambiado a parámetro de ruta
+    Route::put('/{author}', [AuthorController::class, 'update'])->middleware('auth:sanctum'); // Cambiado a parámetro de ruta
     Route::delete('/{author}', [AuthorController::class, 'destroy'])->middleware('auth:sanctum'); // Cambiado a parámetro de ruta
 });
 

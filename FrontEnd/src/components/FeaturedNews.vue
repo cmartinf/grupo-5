@@ -52,7 +52,7 @@ export default {
   name: "FeaturedNews",
   data() {
     return {
-      featuredNews: [], // To hold dynamically fetched featured news
+      featuredNews: [], 
     };
   },
   mounted() {
@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     async fetchFeaturedNews() {
-      const baseUrl = import.meta.env.VITE_APP_API_URL; // Base URL from .env
+      const baseUrl = import.meta.env.VITE_APP_API_URL; 
       try {
         const { data } = await axios.get(`${baseUrl}/api/news?limit=15`); // Fetch data from backend with limit=15
         const today = new Date().toLocaleDateString("en-US", {
@@ -128,9 +128,9 @@ export default {
     },
     goToNews(newsId) {
       if (newsId === "nonews") {
-        window.open("https://nonews.org", "_blank"); // Open fallback link
+        window.open("https://nonews.org", "_blank"); 
       } else {
-        this.$router.push(`/news/${newsId}`); // Navigate to the news detail page
+        this.$router.push(`/news/${newsId}`); 
       }
     },
   },
