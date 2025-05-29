@@ -2,7 +2,6 @@
   <div class="mx-5">
     <div class="container-fluid mt-4">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-warning mb-0">Administrar Noticias</h2>
         <div>
           <button class="btn btn-modern text-white me-2" @click="openAuthorsManagement">
             <i class="bi bi-people-fill"></i> Gestionar Autores
@@ -705,25 +704,24 @@ export default {
       }
 
       this.loading = true;
-
+      
       const formData = new FormData();
       formData.append('name', this.editingAuthor.name);
-      formData.append('_method', 'PUT');
-
+       formData.append('_method', 'PUT');
+      
       if (this.editingAuthor.picture) {
         formData.append('profile_picture', this.editingAuthor.picture);
       }
 
       try {
-        // Usar POST con _method=PUT para compatibilidad con Laravel
-        const response = await axios.post(`/api/authors/${this.editingAuthor.id}`, formData, {
+        const response = await axios.put(`/api/authors/${this.editingAuthor.id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'Accept': 'application/json'
           }
         });
 
-        if (response.data.success || response.status === 200) {
+        if (response.data.success) {
           this.toast.success('Autor actualizado correctamente');
           await this.fetchAuthors();
           this.editAuthorModal.hide();
@@ -734,7 +732,7 @@ export default {
       } catch (error) {
         console.error('Error updating author:', error);
         let errorMsg = 'Error al actualizar el autor';
-
+        
         if (error.response) {
           if (error.response.status === 404) {
             errorMsg = 'Autor no encontrado (ID inválido)';
@@ -742,7 +740,7 @@ export default {
             errorMsg = error.response.data.message;
           }
         }
-
+        
         this.toast.error(errorMsg);
       } finally {
         this.loading = false;

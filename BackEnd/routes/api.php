@@ -8,6 +8,8 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
+// Rutas para el registro de usuarios
 
 Route::get('/user', function (Request $request) {
     return $request->user();

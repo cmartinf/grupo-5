@@ -10,21 +10,22 @@ class NewsSeeder extends Seeder
     public function run()
     {
         News::create([
-            'title' => 'Breaking News: Laravel Rocks',
-            'content' => 'Laravel is one of the best PHP frameworks.',
-            'image' => 'news/laravel.jpg',
+            'title' => 'Último Momento: Laravel es Increíble',
+            'content' => 'Laravel es uno de los mejores frameworks de PHP.',
+            'image' => 'noticias/laravel.jpg',
             'category' => 'Política',
-            'author_id' => 1, 
+            'author_id' => 1,
             'heart_counts' => 100,
         ]);
 
         News::create([
-            'title' => 'VueJS on the Rise',
-            'content' => 'VueJS is becoming a popular frontend framework.',
-            'image' => 'news/vuejs.jpg',
-            'category' => 'politics',
-            'author_id' => 2, 
+            'title' => 'VueJS está en auge',
+            'content' => 'VueJS se está convirtiendo en un framework frontend muy popular.',
+            'image' => 'noticias/vuejs.jpg',
+            'category' => 'Política',
+            'author_id' => 2,
             'heart_counts' => 150,
         ]);
     }
 }
+
