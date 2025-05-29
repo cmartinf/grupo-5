@@ -8,10 +8,13 @@
 
       <div class="small">
         <template v-if="!isLoggedIn">
-          <button class="btn btn-login px-3 py-1" @click.prevent="redirectToLogin">
+          
+          <!-- <button class="btn btn-login px-3 py-1" @click.prevent="redirectToLogin">
             <i class="bi bi-person-circle me-1"></i> Login
-          </button>
-        </template>
+        </button>-->
+        
+      
+      </template>
         <template v-else>
           <button
             class="btn btn-login px-3 py-1"
