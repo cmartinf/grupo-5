@@ -28,7 +28,7 @@ Desarrollar un sistema moderno, desacoplado, con:
 
 ## 2. Arquitectura Propuesta
 
-![Diagrama de Arquitectura](ruta/a/diagrama-arquitectura.png)
+![Diagrama de Arquitectura](./docs/estructura.png)
 
 - **Frontend:** SPA hecha con Vue.js 3.
 - **Backend:** API REST desarrollada en Laravel 11.
