@@ -104,21 +104,31 @@ Desarrollar un sistema moderno, desacoplado, con:
 
 ## 7. Seguridad
 
-- **Autenticación:** Laravel Breeze (JWT o sesiones)
-- **Autorización:** Middleware por roles
-- **Validación:** Form Requests en controladores
-- **Buenas prácticas aplicadas:**
-  - HTTPS obligatorio
-  - Sanitización de inputs
-  - Prevención de CSRF, XSS, SQL Injection
+### Medidas de seguridad implementadas
+
+- Autenticación y autorización (Laravel Breeze)
+- Hash de contraseñas (bcrypt por defecto en Laravel)
+- Validación de datos en backend (Form Requests y validaciones en controladores)
+- Protección contra SQL Injection (Eloquent ORM)
+- Prevención de XSS en frontend (Vue.js)
+- Protección CSRF en rutas web (Laravel)
+
+### Recomendaciones adicionales (a implementar según el entorno)
+
+- Configuración de CORS personalizada
+- Middleware de rate limiting
+- Uso de HTTPS en producción
+- Actualización periódica de dependencias
+- Monitoreo y logs de seguridad
+- Almacenamiento seguro de tokens (cookies httpOnly)
 
 ---
+
 ## 8. Comunicación Frontend ↔ Backend con Axios
 
 ### 🔁 Flujo de una solicitud típica
 
 ![Diagrama de Arquitectura](./docs/axios.png)
-
 
 ## 9. Instalación del Proyecto
 
@@ -212,6 +222,72 @@ cd grupo-5
   - FrontEnd: `npm run dev`
   
 - Acceso a la aplicación por **frontend URL** (`http://127.0.0.1:5173`).
+
+---
+
+## 10. Troubleshooting (Solución de Problemas Comunes)
+
+A continuación se agrega una lista con algunos problemas frecuentes durante la instalación y su posible solución:
+
+### ❗ Error: "Could not find driver" (al correr migraciones en Laravel)
+- **Causa:** Falta la extensión de PHP para MySQL.
+- **Solución:**  
+  Instala la extensión ejecutando:
+  ```bash
+  sudo apt install php-mysql
+  ```
+  Luego reinicia el servidor web o el servicio PHP.
+
+---
+
+### ❗ Error: "SQLSTATE[HY000] [1045] Access denied for user"
+- **Causa:** Credenciales incorrectas en el archivo `.env` de Laravel.
+- **Solución:**  
+  Verifica que los valores de `DB_USERNAME` y `DB_PASSWORD` coincidan con los de tu base de datos MySQL.
+
+---
+
+### ❗ Error: "npm: command not found" o "node: command not found"
+- **Causa:** Node.js y npm no están instalados.
+- **Solución:**  
+  Instala Node.js y npm:
+  ```bash
+  sudo apt install nodejs npm
+  ```
+
+---
+
+### ❗ Error: "Port already in use" (puerto ocupado)
+- **Causa:** El puerto necesario ya está siendo usado por otro proceso.
+- **Solución:**  
+  - Cambia el puerto en el comando de inicio (`php artisan serve --port=8001` o `npm run dev -- --port=5174`).
+  - O libera el puerto matando el proceso que lo usa:
+    ```bash
+    sudo lsof -i :8000
+    sudo kill -9 <PID>
+    ```
+
+---
+
+### ❗ Error: "Permission denied" al instalar dependencias
+- **Causa:** Falta de permisos en la carpeta del proyecto.
+- **Solución:**  
+  Ejecuta el comando con `sudo` o cambia los permisos de la carpeta:
+  ```bash
+  sudo chown -R $USER:$USER /ruta/al/proyecto
+  ```
+
+---
+
+### ❗ Problemas con variables de entorno
+- **Causa:** El archivo `.env` no está configurado correctamente o falta.
+- **Solución:**  
+  - Asegúrate de copiar `.env.example` a `.env` y completar los valores necesarios.
+  - Reinicia los servidores después de modificar `.env`.
+
+---
+
+Si encuentras otros problemas, revisa la documentación oficial de [Laravel](https://laravel.com/docs) y [Vue.js](https://vuejs.org/guide/), o abre un issue en el repositorio.
 
 ---
 
