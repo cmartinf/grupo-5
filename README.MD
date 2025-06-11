@@ -128,7 +128,7 @@ Desarrollar un sistema moderno, desacoplado, con:
 
 ### 🔁 Flujo de una solicitud típica
 
-![Diagrama de Arquitectura](./docs/axios.png)
+![Diagrama de Arquitectura](./docs/axios.svg)
 
 ## 9. Instalación del Proyecto
 

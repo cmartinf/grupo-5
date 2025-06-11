@@ -1,0 +1,76 @@
+<!-- filepath: /grupo-5/docs/axios.svg -->
+<svg width="440" height="760" viewBox="0 0 440 760" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .box-frontend { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2; }
+    .box-backend { fill: #fff3e0; stroke: #ef6c00; stroke-width: 2; }
+    .box-db { fill: #e8f5e9; stroke: #388e3c; stroke-width: 2; }
+    .box-generic { fill: #f3e5f5; stroke: #8e24aa; stroke-width: 2; }
+    .arrow { stroke: #444; stroke-width: 2; marker-end: url(#arrowhead);}
+    .label { font-family: Arial, sans-serif; font-size: 18px; fill: #222; font-weight: bold;}
+    .small { font-size: 14px; fill: #444; font-family: Arial, sans-serif;}
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="7" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#444"/>
+    </marker>
+  </defs>
+
+  <!-- Usuario -->
+  <rect class="box-generic" x="100" y="30" width="240" height="50" rx="10"/>
+  <text class="label" x="220" y="62" text-anchor="middle">Usuario</text>
+
+  <!-- Arrow 1 -->
+  <line class="arrow" x1="220" y1="80" x2="220" y2="110"/>
+
+  <!-- Frontend Vue.js -->
+  <rect class="box-frontend" x="100" y="110" width="240" height="60" rx="10"/>
+  <text class="label" x="220" y="145" text-anchor="middle">Frontend (Vue.js)</text>
+  <text class="small" x="220" y="165" text-anchor="middle">Interfaz de usuario</text>
+
+  <!-- Arrow 2 -->
+  <line class="arrow" x1="220" y1="170" x2="220" y2="200"/>
+
+  <!-- Axios -->
+  <rect class="box-frontend" x="100" y="200" width="240" height="60" rx="10"/>
+  <text class="label" x="220" y="235" text-anchor="middle">Axios (HTTP Request)</text>
+  <text class="small" x="220" y="255" text-anchor="middle">/api/news</text>
+
+  <!-- Arrow 3 -->
+  <line class="arrow" x1="220" y1="260" x2="220" y2="290"/>
+
+  <!-- API Laravel -->
+  <rect class="box-backend" x="100" y="290" width="240" height="60" rx="10"/>
+  <text class="label" x="220" y="325" text-anchor="middle">API Laravel</text>
+  <text class="small" x="220" y="345" text-anchor="middle">routes/api.php</text>
+
+  <!-- Arrow 4 -->
+  <line class="arrow" x1="220" y1="350" x2="220" y2="380"/>
+
+  <!-- NewsController@index -->
+  <rect class="box-backend" x="100" y="380" width="240" height="60" rx="10"/>
+  <text class="label" x="220" y="415" text-anchor="middle">NewsController@index</text>
+  <text class="small" x="220" y="435" text-anchor="middle">Lógica de negocio</text>
+
+  <!-- Arrow 5 -->
+  <line class="arrow" x1="220" y1="440" x2="220" y2="470"/>
+
+  <!-- Modelo News -->
+  <rect class="box-backend" x="100" y="470" width="240" height="60" rx="10"/>
+  <text class="label" x="220" y="505" text-anchor="middle">Modelo News</text>
+  <text class="small" x="220" y="525" text-anchor="middle">Consulta a la BD</text>
+
+  <!-- Arrow 6 -->
+  <line class="arrow" x1="220" y1="530" x2="220" y2="560"/>
+
+  <!-- Base de Datos -->
+  <rect class="box-db" x="100" y="560" width="240" height="50" rx="10"/>
+  <text class="label" x="220" y="592" text-anchor="middle">Base de Datos</text>
+
+  <!-- Arrow 7 -->
+  <line class="arrow" x1="220" y1="610" x2="220" y2="640"/>
+
+  <!-- Respuesta JSON -->
+  <rect class="box-frontend" x="100" y="640" width="240" height="60" rx="10"/>
+  <text class="label" x="220" y="675" text-anchor="middle">Respuesta JSON</text>
+  <text class="small" x="220" y="695" text-anchor="middle">Devuelta al frontend</text>
+</svg>
