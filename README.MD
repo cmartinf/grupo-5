@@ -117,19 +117,8 @@ Desarrollar un sistema moderno, desacoplado, con:
 
 ### 🔁 Flujo de una solicitud típica
 
-[ Usuario ]
-    ↓
-[ Vue Frontend ]
-    ↓ Axios
-[ http://127.0.0.1:8000/api/news ]
-    ↓
-[ Laravel routes/api.php ] → [ NewsController@index ]
-    ↓
-[ Modelo News → Base de Datos ]
-    ↓
-[ JSON de respuesta ]
-    ↓
-[ Vue muestra la información ]
+![Diagrama de Arquitectura](./docs/axios.png)
+
 
 ## 9. Instalación del Proyecto
 
