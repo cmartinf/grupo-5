@@ -8,7 +8,7 @@ Grupo 5
 
 ## 1. Descripción del Sistema
 
-MANAGER_NEWS es una plataforma editorial de noticias desarrollada con arquitectura desacoplada. Permite a usuarios consultar artículos filtrados por categoría, tendencias o etiquetas, y a los administradores gestionar el contenido desde un panel seguro.
+MANAGER NEWS es una plataforma editorial de noticias desarrollada con arquitectura desacoplada. Permite a usuarios consultar artículos filtrados por categoría, tendencias o etiquetas, y a los administradores gestionar el contenido desde un panel seguro.
 
 ### Problema Detectado
 Muchos portales informativos no ofrecen filtros útiles, interfaces limpias ni una gestión intuitiva del contenido.
@@ -65,13 +65,16 @@ Desarrollar un sistema moderno, desacoplado, con:
 - **Framework:** Laravel 11
 - **Controladores RESTful:**
   - `NewsController`, `AuthorController`, `TagController`, `CategoryController`, etc.
-- **Endpoints relevantes:**
-  - `GET /api/news`, `POST /api/news`, `PUT /api/news/{id}`, etc.
-- **Principios aplicados:**  
-  - MVC  
-  - SOLID  
-  - Middleware de roles  
-  - Validaciones centralizadas (Form Requests)
+- **Endpoints clave:**
+  - `GET /api/news`  
+  - `POST /api/news`  
+  - `PUT /api/news/{id}`  
+  - `DELETE /api/news/{id}`  
+- **Principios aplicados:**
+  - MVC
+  - SOLID
+  - Middleware por roles
+  - Validación con Form Requests
 
 ---
 
@@ -101,17 +104,34 @@ Desarrollar un sistema moderno, desacoplado, con:
 
 ## 7. Seguridad
 
-- **Autenticación:** Laravel Breeze con JWT o sesiones.
-- **Autorización:** Middleware por roles (admin / user).
-- **Validación:** Request validation para todos los inputs.
-- **Buenas prácticas:**  
-  - Uso de HTTPS  
-  - Sanitización de entradas  
-  - Protección CSRF, XSS, SQLi  
+- **Autenticación:** Laravel Breeze (JWT o sesiones)
+- **Autorización:** Middleware por roles
+- **Validación:** Form Requests en controladores
+- **Buenas prácticas aplicadas:**
+  - HTTPS obligatorio
+  - Sanitización de inputs
+  - Prevención de CSRF, XSS, SQL Injection
 
 ---
+## 8. Comunicación Frontend ↔ Backend con Axios
 
-## 8. Instalación del Proyecto
+### 🔁 Flujo de una solicitud típica
+
+[ Usuario ]
+    ↓
+[ Vue Frontend ]
+    ↓ Axios
+[ http://127.0.0.1:8000/api/news ]
+    ↓
+[ Laravel routes/api.php ] → [ NewsController@index ]
+    ↓
+[ Modelo News → Base de Datos ]
+    ↓
+[ JSON de respuesta ]
+    ↓
+[ Vue muestra la información ]
+
+## 9. Instalación del Proyecto
 
 ### 🔧 Requisitos Previos
 - Node.js, npm
