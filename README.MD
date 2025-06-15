@@ -8,7 +8,7 @@ Grupo 5
 
 ## 1. Descripción del Sistema
 
-MANAGER NEWS es una plataforma editorial de noticias desarrollada con arquitectura desacoplada. Permite a usuarios consultar artículos filtrados por categoría, tendencias o etiquetas, y a los administradores gestionar el contenido desde un panel seguro.
+MANAGER NEWS es una plataforma editorial de noticias desarrollada con arquitectura desacoplada. Les permite a los usuarios consultar artículos filtrados por categoría, tendencias o etiquetas, y a los administradores gestionar el contenido desde un panel seguro.
 
 ### Problema Detectado
 Muchos portales informativos no ofrecen filtros útiles, interfaces limpias ni una gestión intuitiva del contenido.
@@ -22,13 +22,13 @@ Desarrollar un sistema moderno, desacoplado, con:
 
 ### Tipos de Usuarios
 - **Lectores:** Consultan noticias, acceden a detalles, filtran por tags o categorías.
-- **Admins:** Autenticados, crean/actualizan noticias, administran autores y etiquetas.
+- **Admins:** Autenticados, crean/eliminan/actualizan noticias, administran autores y etiquetas.
 
 ---
 
 ## 2. Arquitectura Propuesta
 
-![Diagrama de Arquitectura](./docs/estructura.png)
+![Diagrama de Arquitectura](./docs/arquitectura.jpeg)
 
 - **Frontend:** SPA hecha con Vue.js 3.
 - **Backend:** API REST desarrollada en Laravel 11.
@@ -78,28 +78,92 @@ Desarrollar un sistema moderno, desacoplado, con:
 
 ---
 
-## 5. Testing
+### 5. Testing
 
-- **Backend:**
-  - `PHPUnit`: test unitarios y de integración.
-- **Frontend:**
-  - Posibilidad de usar `Jest` y `Vue Test Utils`.
-- **Tipos de pruebas:**
-  - Unitarias: lógica de modelos y validaciones.
-  - Integración: consumo de endpoints.
-  - Funcionales (opcional): navegación y flujos.
+El proceso de testing es fundamental para garantizar la calidad, estabilidad y seguridad del sistema. En el proyecto MANAGER_NEWS se han implementado pruebas en ambos extremos de la arquitectura desacoplada: backend y frontend.
+
+#### Backend
+
+- **PHPUnit:** Framework utilizado para la realización de pruebas unitarias y de integración en el backend desarrollado con Laravel.  
+  - **Pruebas unitarias:** Validan la lógica interna de los modelos, controladores y servicios, asegurando que cada componente individual funcione correctamente.  
+  - **Pruebas de integración:** Evalúan la interacción entre múltiples componentes, por ejemplo, el correcto manejo de peticiones y respuestas, y la comunicación con la base de datos.
+
+#### Frontend
+
+- **Jest y Vue Test Utils:** Herramientas seleccionadas para la ejecución de pruebas unitarias y de integración en el frontend desarrollado con Vue.js.  
+  - **Pruebas unitarias:** Validan el comportamiento de componentes individuales, funciones y métodos.  
+  - **Pruebas de integración:** Comprueban la interacción entre componentes, así como el correcto consumo de endpoints mediante Axios.
+
+#### Tipos de pruebas implementadas
+
+- **Pruebas Unitarias:** Focalizadas en validar la funcionalidad aislada de módulos, clases o funciones para detectar errores en la lógica interna.  
+- **Pruebas de Integración:** Evaluación conjunta de varios componentes para verificar su correcto funcionamiento en conjunto.  
+- **Pruebas Funcionales (opcional):** Simulación del comportamiento del usuario y flujos completos dentro de la aplicación para asegurar que los casos de uso estén cubiertos.
 
 ---
 
-## 6. Despliegue y CI/CD
+### 6. Entorno de Producción
 
-- **Backend:** Heroku / DigitalOcean (sugerido).
-- **Frontend:** Vercel / Netlify.
-- **CI/CD:** GitHub Actions (instalación, testeo, deploy automático).
-- **Integración:**  
-  - `.env` en Vue para apuntar al backend.
-  - `.env` en Laravel con conexión a base de datos productiva.
+Para el despliegue y operación del proyecto MANAGER NEWS en un entorno productivo se pensaron en las siguientes herramientas y configuraciones:
 
+#### Infraestructura
+
+- **Backend:** Desplegado en plataformas cloud como **Heroku** o **DigitalOcean** (sugerido), que ofrecen escalabilidad y estabilidad.  
+- **Frontend:** Hospedado en servicios especializados para aplicaciones estáticas o SPA como **Vercel** o **Netlify**, optimizados para Vue.js.
+
+#### Integración Continua y Despliegue (CI/CD)
+
+- **GitHub Actions:** Configurado para automatizar la instalación de dependencias, ejecución de pruebas (testing) y despliegue automático en cada push a ramas específicas (ej. `main` o `production`).  
+- Esto asegura que cada cambio en el código pase por validaciones antes de ser publicado en producción, garantizando calidad y minimizando errores en el despliegue.
+
+#### Configuración y Variables de Entorno
+
+- **Frontend:** Uso de un archivo `.env` en Vue para definir la URL del backend en producción (API REST), asegurando que las peticiones apunten al entorno correcto.  
+- **Backend:** Archivo `.env` en Laravel configurado con los datos de conexión a la base de datos productiva y otras variables sensibles (clave de API, configuración mail, etc.), manteniendo la seguridad y separación de entornos.
+
+
+## 🌐 Acceso público seguro con Cloudflare Tunnel
+
+Durante el desarrollo del proyecto, utilizamos **Cloudflare Tunnel (`cloudflared`)** para exponer de forma segura tanto el frontend como el backend en la web, sin necesidad de abrir puertos en el router ni contar con una IP fija.
+
+Esto permite al equipo trabajar desde distintas ubicaciones y mostrar el proyecto en tiempo real desde una computadora local.
+
+### ¿Cómo lo usamos?
+
+Un script Bash automatiza el proceso:
+
+   ```bash
+   #!/bin/bash
+
+echo "Iniciando Laravel..."
+cd /grupo-5/BackEnd
+php artisan serve &
+
+echo "Iniciando Vue..."
+cd /grupo-5/FrontEnd
+npm run dev &
+
+echo "Esperando 5 segundos..."
+sleep 5
+
+echo "Iniciando Cloudflared..."
+cloudflared tunnel --url http://localhost:5173
+   ```
+
+Cada ejecución genera una URL temporal del tipo:
+
+https://xxxxx.trycloudflare.com
+
+
+Esto es ideal para pruebas, revisiones en tiempo real y presentaciones académicas, sin necesidad de desplegar el proyecto en un servidor público.
+
+### 🟢 Beneficios del uso de Cloudflare Tunnel
+
+- ✅ **HTTPS automático** (sin necesidad de certificados ni configuración extra)
+- 🌍 **Acceso inmediato y remoto** desde cualquier lugar
+- 🔒 **Sin puertos abiertos** en el router ni exposición directa a Internet
+- ⚡ **Rápido, seguro y gratuito**
+- 💡 Perfecto para **trabajo colaborativo y presentaciones** sin infraestructura compleja
 ---
 
 ## 7. Seguridad
@@ -223,6 +287,13 @@ cd grupo-5
   
 - Acceso a la aplicación por **frontend URL** (`http://127.0.0.1:5173`).
 
+## Utilizar scripts START.SH:
+
+Si al instalar y probar que todo funciona en local podemos ejecutar START.SH de la siguiente manera:
+
+```bash
+   ./start.sh
+   ```
 ---
 
 ## 10. Troubleshooting (Solución de Problemas Comunes)
