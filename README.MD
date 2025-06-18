@@ -2,7 +2,50 @@
 
 Trabajo Final - Programación de Vanguardia  
 Universidad de la Ciudad de Buenos Aires  
-Grupo 5  
+
+# Grupo 5  
+
+# 👥 Roles del Equipo de Desarrollo
+
+## 🎯 **Líder de Proyecto / Product Owner**  
+**Nombre:** Martín Fariña  
+**Función:**  
+Define la visión estratégica del producto *Manager News* y actúa como puente entre el equipo técnico y los stakeholders. Prioriza funcionalidades, gestiona al equipo, y garantiza que el desarrollo se alinee con los objetivos del negocio y las necesidades de los distintos usuarios (redactor, lector, moderador).
+
+---
+
+## 🏗️ **Arquitecto de Software / Desarrollador Backend**  
+**Nombre:** Martín Fariña  
+**Función:**  
+Diseña la arquitectura técnica del sistema, construye la lógica del servidor, gestiona la base de datos y asegura la integración fluida de todos los módulos (creación, moderación, lectura de artículos). Se enfoca en garantizar un sistema escalable, robusto y seguro.
+
+---
+
+## 🎨 **Desarrollador Frontend / Diseñadora UI/UX**  
+**Nombre:** Paula Quiroga  
+**Función:**  
+Transforma el diseño visual en una experiencia interactiva, accesible y responsiva. Se encarga de que la interfaz de *Manager News* sea intuitiva y atractiva para usuarios de todos los perfiles. Prioriza la usabilidad, la compatibilidad móvil/escritorio y la estética visual del portal.
+
+---
+
+## 🧪 **Ingeniero de Calidad (QA Tester)**  
+**Nombre:** Guillermo Giménez  
+**Función:**  
+Asegura que la plataforma funcione sin errores y cumpla con estándares de calidad. Diseña y ejecuta pruebas funcionales, de rendimiento y seguridad. Su trabajo previene fallas antes del lanzamiento, garantizando una experiencia fluida para los usuarios finales.
+
+---
+
+## ⚙️ **Especialista en DevOps (Development Operations)**  
+**Nombre:** Alejandra Mamani  
+**Función:**  
+Automatiza los procesos de desarrollo, integración y despliegue. Administra la infraestructura y las herramientas necesarias para que el equipo trabaje de forma ágil y confiable. Asegura la disponibilidad continua de la plataforma y participa activamente en la configuración de entornos seguros.
+
+---
+
+## 🔐 **Especialista en Ciberseguridad**  
+**Nombre:** Marcos Machiavello  
+**Función:**  
+Protege los datos y la infraestructura de *Manager News*. Realiza análisis de vulnerabilidades, pruebas de penetración y aplica controles de seguridad (autenticación robusta, cifrado, control de roles). Asegura el cumplimiento de normativas de privacidad y colabora estrechamente con Backend y DevOps para integrar la seguridad desde el diseño (*Security by Design*).
 
 ---
 
@@ -262,17 +305,12 @@ cd grupo-5
    npm install
    ```
 
-3. Copiar el archivo `.env.example` a `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Configurar la URL del backend en `.env`:
+3. Configurar la URL del backend en `.env`:
    ```bash
    VITE_APP_API_URL=http://127.0.0.1:8000
    ```
 
-5. Iniciar el servidor de desarrollo:
+4. Iniciar el servidor de desarrollo:
    ```bash
    npm run dev
    ```
